@@ -1,0 +1,177 @@
+---
+title: "RFID Lab Analysis"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    theme: yeti
+    social: [ "twitter", "facebook", "menu"]
+
+  knit: (function(input_file, encoding) {
+      out_dir <- 'docs';
+      rmarkdown::render(input_file,
+      encoding=encoding,
+      output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(knitr)
+library(DT)
+library(rpivotTable)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(openintro)
+library(highcharter)
+library(ggvis)
+```
+
+```{r}
+data <- read.csv("ThesisDataset.csv")
+```
+
+```{r}
+mycolors <- c("blue", "#FFC125", "darkgreen", "darkorange")
+```
+
+
+
+Dashboard
+=====================================
+
+Column {data-width=225}
+-------------------------------------
+
+### Total Students
+
+```{r}
+valueBox(length(data$ï..Student.Name),
+         color = "orange")
+```
+
+### Report Submitted
+
+```{r}
+valueBox(sum(data$Report.Submitted == "Yes"), color = "skyblue")
+```
+
+### Experiment Successful
+
+```{r}
+valueBox(sum(data$Result.of.Experiment == "Success"),
+         color = "lightgreen")
+```
+
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Experiment Time Analysis
+
+```{r}
+p1 <- data %>%
+         group_by(ï..Student.Name) %>%
+         plot_ly(x = ~ï..Student.Name,
+                 y = ~Time.taken.for.experiment,
+                 color = "blue",
+                 type = 'bar') %>%
+layout(xaxis = list(title = "Students"),
+yaxis = list(title = 'Time (hrs)'))
+p1
+```
+
+### Quiz Result Analysis
+
+```{r}
+p2 <- data %>%
+         group_by(Quiz.result) %>%
+         summarise(count = n()) %>%
+         plot_ly(labels = ~Quiz.result,
+                 values = ~count,
+                 marker = list(colors = mycolors)) %>%
+         add_pie(hole = 0.2) %>%
+         layout(xaxis = list(zeroline = F,
+                             showline = F,
+                             showticklabels = F,
+                             showgrid = F),
+                yaxis = list(zeroline = F,
+                             showline = F,
+                             showticklabels=F,
+                             showgrid=F))
+p2
+```
+
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Forum Interaction Analysis
+
+```{r}
+p3 <- plot_ly(data, x=~Question.Asked) %>%
+         add_markers(y = ~Question.Answered,
+                     text = ~paste("Question Answered in forum: ", Question.Answered),
+                     showlegend = F) %>%
+         add_lines(y = ~fitted(loess(Question.Answered ~ Question.Asked)),
+                   name = "Loess Smoother",
+                   color = I("#FFC125"),
+                   showlegend = T,
+                   line = list(width=5)) %>%
+         layout(xaxis = list(title = "Question Asked"),
+                yaxis = list(title = "Question Answered"))
+p3
+```
+
+### Quiz Time Analysis
+
+```{r}
+p4 <- plot_ly(data, x = ~ï..Student.Name, y = ~Time.taken.for.Quiz, type = 'scatter') %>%
+         layout(xaxis = list(title = "Student"),
+                yaxis = list(title = "Quiz Time"))
+p4
+
+```
+
+
+Experiment Data
+=========================================
+
+### In Depth View of the Method Used in Experiment
+
+```{r}
+p5 <- plot_ly(data, x = ~ï..Student.Name, y = ~Transponder.Selected, text = ~Substrate.Selected, type = 'scatter', mode ='markers',
+        marker = list(size = ~Time.taken.for.experiment*5, opacity = 1))%>% layout(
+         xaxis = list(title = "Name of student"),
+         yaxis = list(title = "Transponder selected"))
+
+p5
+
+```
+
+
+Lab Data
+========================================
+
+```{r}
+
+datatable(data,
+          colnames = c('Student Name', 'Downloaded Experiment Guide', 'Result of Experiment', 'Time taken for experiment', 'Report Submitted', 'Question Asked', 'Question Answered', 'Quiz result', 'Time taken for Quiz', 'Method seleted', 'Substrate Selected', 'Transponder Selected'),
+          caption = "RFID Lab Interaction Data",
+          rownames = T,
+          filter = "top",
+          style = 'bootstrap4',
+          options = list(pageLength = 25))
+```
+
+
+About Dashboard
+========================================
+
+Created by: Prantik Chatterjee
+
+This dashboard is developed as a part of submission of my Masters Thesis on Learning Analytics Concept for learning RFID Basics in a Lab. The report of this thesis work is submitted along with this dashboard.
+
+Data used: Dummy data is generated. Any resemblance to reality is pure coincidence. 
+

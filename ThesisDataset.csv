@@ -1,0 +1,21 @@
+﻿Student Name,Downloaded Expeiment Guide,Result of Experiment,Time taken for experiment,Report Submitted,Question Asked,Question Answered,Quiz result,Time taken for Quiz,Method seleted,Substrate Selected,Transponder Selected
+Max,Yes,Success,3,Yes,2,5,Pass,1.3,1,All,Impinj
+Alex,No,Success,4,Yes,1,2,Pass,2,1,All,Texas Instruments
+Alice,Yes,Success,7,No,6,1,Pass,1,1,All,Texas Instruments
+Rohit,Yes,Success,8,Yes,0,2,Pass,1.5,2,Glass,All
+Sabine,No,Success,4,Yes,1,4,Pass,2,1,All,Impinj
+Jurgen,Yes,Success,5,Yes,4,6,Pass,1,2,Wood,All
+Mathew,Yes,Success,6,No,3,2,Pass,1,2,Wood,All
+Seri,No,Fail,3,No,0,0,Fail,1.2,1,All,Impinj
+Sushmita,Yes,Success,9,Yes,4,8,Fail,2,2,Metal,All
+Prat,No,Fail,7,No,2,6,Fail,2.2,2,Glass,All
+Simon,No,Fail,8,No,0,0,Fail,1.4,2,Metal,All
+Lisa,Yes,Success,5,No,1,2,Pass,2,2,Wood,All
+Maria,Yes,Success,3,Yes,2,1,Pass,2,2,Wood,All
+Rafael,Yes,Success,3,No,4,2,Pass,2.4,1,All,NXP
+Roger,No,Fail,4,No,6,0,Fail,1,2,Wood,All
+Novak,Yes,Success,5,Yes,1,0,Pass,1,1,All,Texas Instruments
+Manuel,No,Fail,6,No,1,1,Fail,1,1,All,NXP
+Lionel,No,Fail,4,No,2,2,Pass,2,2,Glass,All
+Christiano,Yes,Success,2,Yes,1,0,Pass,2.5,2,Glass,All
+Sunil,Yes,Success,6,Yes,2,5,Pass,2,1,All,Texas Instruments
